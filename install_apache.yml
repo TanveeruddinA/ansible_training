@@ -9,20 +9,38 @@
       name: apache2
       state: latest
     when: ansible_facts['os_family'] == "Debian"
-
-  - name: install apache2 package
-    ansible.builtin.dnf:
-      name: httpd
-      state: latest
-    when: ansible_facts['distribution'] == "CentOS"
  
   - name: update repository index
     ansible.builtin.apt:
       update_cache: yes
     when: ansible_facts['os_family'] == "Debian"
 
+  - name: update repository index Centos
+    ansible.builtin.dnf:
+      update_cache: yes
+    when: ansible_facts['distribution'] == "CentOS"
+
+
   - name: add php support for apache
     ansible.builtin.apt:
       name: libapache2-mod-php
       state: latest
     when: ansible_facts['os_family'] == "Debian"
+
+  - name: install apache2 package
+    ansible.builtin.dnf:
+      name: httpd
+      state: latest
+    when: ansible_facts['distribution'] == "CentOS"
+
+  - name: update repository index
+    ansible.builtin.dnf:
+      update_cache: yes
+    when: ansible_facts['os_family'] == "CentOS"
+
+  - name: add php support for apache
+    ansible.builtin.apt:
+      name: libapache2-mod-php
+      state: latest
+    when: ansible_facts['os_family'] == "Debian"
+
